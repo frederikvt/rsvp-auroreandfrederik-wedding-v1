@@ -166,10 +166,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 #confirm-screen.show{display:flex;animation:cIn .8s cubic-bezier(.25,.46,.45,.94) both}
 @keyframes cIn{from{opacity:0}to{opacity:1}}
 .c-rule{width:72px;height:1px;background:var(--gold-rule);margin:0 auto 36px}
-.c-grazie{font-family:var(--serif);font-style:italic;font-size:clamp(64px,14vw,108px);font-weight:300;color:var(--charcoal);line-height:.95;letter-spacing:-.03em;margin-bottom:24px}
+.c-grazie{font-family:'EB Garamond',var(--serif);font-style:italic;font-size:clamp(52px,11vw,96px);font-weight:300;color:var(--charcoal);line-height:.95;letter-spacing:-.03em;margin-bottom:32px}
 .c-grazie .g{color:var(--gold-mid)}
-.c-title{font-family:var(--serif);font-size:clamp(18px,3.5vw,26px);font-weight:400;color:var(--charcoal);margin-bottom:14px;letter-spacing:-.01em}
-.c-sub{font-family:var(--serif);font-style:italic;font-size:15px;font-weight:300;color:rgba(24,22,15,.46);max-width:380px;line-height:1.78;margin-bottom:44px}
+.c-title{display:none}
+.c-sub{font-family:var(--serif);font-style:italic;font-size:16.5px;font-weight:300;color:#56493A;max-width:480px;line-height:1.82;margin-bottom:44px}
 .cal-links{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:26px}
 .cal-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border:1px solid var(--ch18);border-radius:2px;background:#fff;font-family:var(--sans);font-size:9px;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:var(--charcoal);text-decoration:none;cursor:pointer;transition:border-color .2s,color .2s,box-shadow .2s}
 .cal-btn:hover{border-color:var(--gold-mid);color:var(--gold-deep);box-shadow:0 2px 12px rgba(196,151,62,.1)}
@@ -309,11 +309,10 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 <!-- ═══ CONFIRMATION ═══ -->
 <div id="confirm-screen">
   <div class="c-rule"></div>
-  <div class="c-grazie"><em>Gra<span class="g">z</span>ie</em></div>
+  <div class="c-grazie"><em>Grazie mille</em></div>
   <div class="c-title">We can't wait to celebrate together.</div>
-  <p class="c-sub" id="confirmSub">Your RSVP has been received. A confirmation is on its way to your inbox.</p>
+  <p class="c-sub" id="confirmSub">Please add the event to your calendar below and stay posted for further updates closer to the date.</p>
   <div class="cal-links" id="calLinks"></div>
-  <p class="c-foot">We will be in touch with all details closer to the date.</p>
 </div>
 
 
@@ -415,7 +414,7 @@ document.getElementById('rsvpForm').addEventListener('submit',async e=>{
 // ─── CONFIRMATION ───
 function showConfirm(data,attending){
   const first=data.guestName.split(' ')[0];
-  document.getElementById('confirmSub').textContent=`Caro/a ${first}, la tua presenza è confermata. A confirmation has been sent to ${data.guestEmail}.`;
+  document.getElementById('confirmSub').textContent='Please add the event to your calendar below and stay posted for further updates closer to the date.';
   const links=document.getElementById('calLinks'); links.innerHTML='';
   if(attending.length){
     const icsBtn=Object.assign(document.createElement('button'),{className:'cal-btn',innerHTML:'&#128197; Outlook / Apple Calendar'});
