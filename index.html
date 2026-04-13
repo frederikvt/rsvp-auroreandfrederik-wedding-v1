@@ -153,10 +153,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 .ftr-crest{font-family:var(--serif);font-style:italic;font-size:26px;font-weight:300;color:var(--charcoal);opacity:.13;letter-spacing:.04em}
 .ftr-txt{font-family:var(--serif);font-style:italic;font-size:12.5px;color:rgba(24,22,15,.3)}
 
-/* Music btn */
-#music-btn{display:flex;position:fixed;bottom:32px;right:32px;width:46px;height:46px;border-radius:50%;background:var(--charcoal);border:1px solid rgba(196,151,62,.22);cursor:pointer;align-items:center;justify-content:center;z-index:100;box-shadow:0 4px 20px rgba(24,22,15,.25);transition:transform .25s,box-shadow .25s,background .25s;color:var(--gold-light);font-size:15px}
-#music-btn:hover{transform:scale(1.08);box-shadow:0 6px 28px rgba(24,22,15,.32);background:#242218}
-#music-btn.playing{box-shadow:0 4px 24px rgba(196,151,62,.3)}
 
 /* Loading */
 #loading{display:none;position:fixed;inset:0;background:rgba(253,250,245,.92);backdrop-filter:blur(6px);z-index:400;align-items:center;justify-content:center;flex-direction:column;gap:18px}
@@ -185,7 +181,6 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   .fgrid .s2{grid-column:1}
   .att-row{flex-direction:column;align-items:flex-start}
   .att-btns{align-self:flex-end}
-  #music-btn{bottom:20px;right:20px}
     }
 </style>
 </head>
@@ -206,7 +201,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
       </p>
       <div class="hdr-meta">
         <div class="mi"><span class="mi-k">Date</span><span class="mi-v">3–5 September 2027</span></div>
-        <div class="mi"><span class="mi-k">Location</span><span class="mi-v">Piedmonte, Italy</span></div>
+        <div class="mi"><span class="mi-k">Location</span><span class="mi-v">Piemonte, Italy</span></div>
       </div>
     </header>
 
@@ -321,39 +316,19 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <p class="c-foot">We will be in touch with all details closer to the date.</p>
 </div>
 
-<button id="music-btn" title="Toggle music">♪</button>
 
 <div id="loading">
   <div class="lring"></div>
   <div class="ltxt">Sending your RSVP…</div>
 </div>
 
-<audio id="bgAudio" loop>
-  <!--
-    To enable music, add:
-    <source src="YOUR_MUSIC_URL.mp3" type="audio/mpeg">
-    Suggestions: Raffaella Carrà · Pino D'Angiò · Al Bano & Romina Power
-  -->
-</audio>
 
 <script>
 // ─── STATE ───
-const S = { attendance:{friday:null,saturday:null,sunday:null}, plusOne:false, music:false };
+const S = { attendance:{friday:null,saturday:null,sunday:null}, plusOne:false };
 
 
-// ─── MUSIC ───
-function tryMusic(){
-  const a=document.getElementById('bgAudio');
-  if(!a.querySelector('source'))return;
-  a.volume=0;
-  a.play().then(()=>{ S.music=true; syncMB(); let v=0; const t=setInterval(()=>{ v=Math.min(v+.016,.4); a.volume=v; if(v>=.4)clearInterval(t); },160); }).catch(()=>{});
-}
-document.getElementById('music-btn').addEventListener('click',()=>{
-  const a=document.getElementById('bgAudio');
-  if(!a.querySelector('source')){ alert('🎵 Add a music source to the <audio> element.\nSuggested: Raffaella Carrà · Umberto Tozzi · Pino D\'Angiò'); return; }
-  S.music?a.pause():a.play(); S.music=!S.music; syncMB();
-});
-function syncMB(){ const b=document.getElementById('music-btn'); b.textContent=S.music?'♪':'♩'; b.classList.toggle('playing',S.music); }
+// ─── MUSIC ───);
 
 // ─── ATTENDANCE ───
 document.querySelectorAll('.att-btn').forEach(btn=>{
@@ -395,16 +370,16 @@ function validEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); }
 
 // ─── CALENDAR ───
 const EVT={
-  friday:  {date:'20270903',end:'20270904',title:'Frederik & Aurore — Welcome Dinner',      desc:'Welcome dinner for the wedding of Frederik Voet & Aurore Dacier de Biasi. Piedmonte, Italy.'},
-  saturday:{date:'20270904',end:'20270905',title:'Frederik & Aurore — Wedding Celebration', desc:'Wedding ceremony and reception. Frederik Voet & Aurore Dacier de Biasi. Piedmonte, Italy.'},
-  sunday:  {date:'20270905',end:'20270906',title:'Frederik & Aurore — Farewell Lunch',      desc:'Farewell lunch with Frederik Voet & Aurore Dacier de Biasi. Piedmonte, Italy.'},
+  friday:  {date:'20270903',end:'20270904',title:'Frederik & Aurore — Welcome Dinner',      desc:'Welcome dinner for the wedding of Frederik Voet & Aurore Dacier de Biasi. Piemonte, Italy.'},
+  saturday:{date:'20270904',end:'20270905',title:'Frederik & Aurore — Wedding Celebration', desc:'Wedding ceremony and reception. Frederik Voet & Aurore Dacier de Biasi. Piemonte, Italy.'},
+  sunday:  {date:'20270905',end:'20270906',title:'Frederik & Aurore — Farewell Lunch',      desc:'Farewell lunch with Frederik Voet & Aurore Dacier de Biasi. Piemonte, Italy.'},
 };
 function buildICS(keys){
   const L=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//A&F Wedding 2027//EN','CALSCALE:GREGORIAN','METHOD:PUBLISH'];
-  keys.forEach(k=>{ const e=EVT[k]; L.push('BEGIN:VEVENT',`UID:${k}-anf-2027@wedding`,`DTSTART;VALUE=DATE:${e.date}`,`DTEND;VALUE=DATE:${e.end}`,`SUMMARY:${e.title}`,`DESCRIPTION:${e.desc}`,'LOCATION:Piedmonte\\, Italy','END:VEVENT'); });
+  keys.forEach(k=>{ const e=EVT[k]; L.push('BEGIN:VEVENT',`UID:${k}-anf-2027@wedding`,`DTSTART;VALUE=DATE:${e.date}`,`DTEND;VALUE=DATE:${e.end}`,`SUMMARY:${e.title}`,`DESCRIPTION:${e.desc}`,'LOCATION:Piemonte\\, Italy','END:VEVENT'); });
   L.push('END:VCALENDAR'); return L.join('\r\n');
 }
-function gcLink(k){ const e=EVT[k]; return 'https://calendar.google.com/calendar/render?action=TEMPLATE&'+new URLSearchParams({text:e.title,dates:`${e.date}/${e.end}`,details:e.desc,location:'Piedmonte, Italy'}); }
+function gcLink(k){ const e=EVT[k]; return 'https://calendar.google.com/calendar/render?action=TEMPLATE&'+new URLSearchParams({text:e.title,dates:`${e.date}/${e.end}`,details:e.desc,location:'Piemonte, Italy'}); }
 function downloadICS(keys){ const blob=new Blob([buildICS(keys)],{type:'text/calendar;charset=utf-8'}); const url=URL.createObjectURL(blob); Object.assign(document.createElement('a'),{href:url,download:'frederik-aurore-wedding.ics'}).click(); URL.revokeObjectURL(url); }
 
 // ─── SHEETS ───
