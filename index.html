@@ -311,7 +311,7 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
   <div class="c-rule"></div>
   <div class="c-grazie"><em>Grazie mille</em></div>
   <div class="c-title">We can't wait to celebrate together.</div>
-  <p class="c-sub" id="confirmSub">Please add the event to your calendar below and stay posted for further updates closer to the date.</p>
+  <p class="c-sub" id="confirmSub">Please add the event to your calendar below and stay posted for further updates.</p>
   <div class="cal-links" id="calLinks"></div>
 </div>
 
@@ -414,11 +414,9 @@ document.getElementById('rsvpForm').addEventListener('submit',async e=>{
 // ─── CONFIRMATION ───
 function showConfirm(data,attending){
   const first=data.guestName.split(' ')[0];
-  document.getElementById('confirmSub').textContent='Please add the event to your calendar below and stay posted for further updates closer to the date.';
+  document.getElementById('confirmSub').textContent='Please add the event to your calendar below and stay posted for further updates.';
   const links=document.getElementById('calLinks'); links.innerHTML='';
   if(attending.length){
-    const icsBtn=Object.assign(document.createElement('button'),{className:'cal-btn',innerHTML:'&#128197; Outlook / Apple Calendar'});
-    icsBtn.onclick=()=>downloadICS(attending); links.appendChild(icsBtn);
     attending.forEach(k=>{
       links.appendChild(Object.assign(document.createElement('a'),{className:'cal-btn',href:gcLink(k),target:'_blank',rel:'noopener',innerHTML:`&#128197; ${EVT[k].title.split('—')[1].trim()} — Google`}));
     });
